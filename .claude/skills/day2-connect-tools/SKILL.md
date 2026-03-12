@@ -1,11 +1,11 @@
 ---
 name: day2-connect-tools
-description: "Internal Camp Day 2: Connect your work tools via MCP. Covers MCP concepts, installing servers, cross-tool queries, and troubleshooting. Use for \"Day 2\", \"MCP\", \"connect tools\", \"Slack\", \"Google Drive\", \"Jira\", \"HubSpot\"."
+description: "Internal Camp Day 2: Connect your work tools to Claude Code. Covers plugins, MCP servers, CLI tools, and step-by-step guides for Slack, Jira, Confluence, Google Workspace, and HubSpot. Use for \"Day 2\", \"connect tools\", \"Slack\", \"Google Drive\", \"Jira\", \"HubSpot\", \"MCP\"."
 ---
 
-# Day 2: Connect Your Tools (MCP)
+# Day 2: Connect Your Work Tools
 
-This skill teaches participants to connect their daily work tools (Slack, Google Drive, Jira, Confluence, HubSpot, Dropbox, etc.) to Claude Code using MCP, and run cross-tool queries.
+This skill teaches participants to connect their daily work tools (Slack, Jira, Confluence, Google Workspace, HubSpot) to Claude Code using various methods — plugins, MCP servers, and CLI tools — then run cross-tool queries.
 
 ---
 
@@ -33,24 +33,25 @@ When you're done, type "done" or "next" to continue.
 
 | Block | File | Topic |
 |-------|------|-------|
-| 0 | `references/block0-what-is-mcp.md` | What is MCP + mental model |
-| 1 | `references/block1-install-first-mcp.md` | Install your first MCP server |
-| 2 | `references/block2-popular-servers.md` | Popular MCP servers by tool |
-| 3 | `references/block3-cross-tool.md` | Cross-tool queries |
-| 4 | `references/block4-troubleshooting.md` | Troubleshooting + debugging |
-| 5 | `references/block5-homework.md` | Homework: connect 2 more tools |
+| 0 | `references/block0-why-connect-tools.md` | Why connect tools + connection methods overview |
+| 1 | `references/block1-install-claude-code.md` | Install Claude Code in Terminal |
+| 2 | `references/block2-connect-slack.md` | Step 1: Connect Slack |
+| 3 | `references/block3-connect-jira-confluence.md` | Step 2: Connect Jira & Confluence |
+| 4 | `references/block4-connect-google-workspace.md` | Step 3: Connect Google Workspace |
+| 5 | `references/block5-connect-hubspot.md` | Step 4: Connect HubSpot (Optional) |
+| 6 | `references/block6-cross-tool-and-homework.md` | Cross-tool queries + Homework |
 
 ---
 
 ## Interaction Rules
 
 - One block at a time
-- Before Block 1, ask what tools the participant uses daily (Slack, Google Drive, Gmail, Google Calendar, Google Meet, Jira, Confluence, HubSpot, Dropbox, etc.)
-- Tailor all examples to the participant's actual tools
-- For MCP issues, check: auth tokens, permissions, server startup
-- Helpful commands to reference: `claude mcp list`, `claude mcp remove`
+- Before Block 1, briefly check which tools the participant uses (Slack, Google Workspace, Jira, Confluence, HubSpot)
+- Walk through each step carefully — these are non-engineers
+- Each block has exact terminal commands and Claude Code commands to follow
+- If something fails, troubleshoot patiently before moving on
 - Language: English
-- Tone: patient, encouraging — MCP setup can be frustrating
+- Tone: patient, encouraging — tool setup can be frustrating
 
 ---
 
@@ -60,12 +61,14 @@ When you're done, type "done" or "next" to continue.
 AskUserQuestion({
   "questions": [{
     "question": "Where would you like to start?",
-    "header": "Day 2: Connect Your Tools",
+    "header": "Day 2: Connect Tools",
     "options": [
-      {"label": "Block 0: What is MCP?", "description": "The mental model — plugins for Claude Code"},
-      {"label": "Block 1: First MCP Server", "description": "Install and test your first connection"},
-      {"label": "Block 2: Popular Servers", "description": "Find servers for your specific tools"},
-      {"label": "Block 3: Cross-tool Queries", "description": "Query across 2+ tools at once"}
+      {"label": "Block 0: Why Connect Tools?", "description": "Overview of how Claude connects to external tools"},
+      {"label": "Block 1: Install Claude Code", "description": "Install Claude Code CLI in your terminal"},
+      {"label": "Block 2: Connect Slack", "description": "Install Slack plugin and test it"},
+      {"label": "Block 3: Connect Jira & Confluence", "description": "Connect Atlassian tools via MCP"},
+      {"label": "Block 4: Google Workspace", "description": "Connect Google Calendar, Drive, Docs, and more"},
+      {"label": "Block 5: Connect HubSpot (Optional)", "description": "Connect HubSpot CRM via MCP"}
     ],
     "multiSelect": false
   }]
