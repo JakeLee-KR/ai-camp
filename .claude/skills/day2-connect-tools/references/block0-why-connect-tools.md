@@ -52,18 +52,15 @@ We'll connect **4 tools** step by step:
 
 ## EXECUTE
 
-Let's see what connections you already have (probably none yet, and that's fine):
+Let's see what connections you already have (probably none yet, and that's fine).
 
-```bash
-# In your terminal:
-claude mcp list
-```
+In **Claude Desktop App**, type `/mcp` and press Enter. This shows your current connections.
 
-If it shows nothing, that's expected! We'll connect your first tool in the next block.
+If nothing appears, that's expected! We'll connect your first tool in the next block.
 
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 
 ## QUIZ
 

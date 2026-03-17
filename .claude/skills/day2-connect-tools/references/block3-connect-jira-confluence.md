@@ -1,4 +1,4 @@
-# Block 2: Connect Jira & Confluence
+# Block 3: Connect Jira & Confluence
 
 ## EXPLAIN
 
@@ -8,7 +8,7 @@ Now let's connect **Jira and Confluence** — both are Atlassian products, so we
 
 #### Step 1: Add the Atlassian MCP server
 
-In your **Terminal** (outside Claude Code), run:
+💻 **Terminal:** Open your Terminal app and run:
 
 ```bash
 claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp
@@ -16,9 +16,10 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp
 
 This tells Claude Code to connect to Atlassian's official MCP server.
 
-#### Step 2: Authenticate in Claude Code
+#### Step 2: Authenticate in Claude Desktop App
 
-1. Open Claude Code (type `claude` in your terminal, or restart if already open)
+📱 **Desktop App:**
+1. Go back to your Claude Desktop App (restart it if it was already open)
 2. Type `/mcp` and press Enter
 3. Select **`atlassian`** from the list
 4. Select **"Authenticate"**
@@ -26,7 +27,7 @@ This tells Claude Code to connect to Atlassian's official MCP server.
 
 #### Step 3: Test it!
 
-Back in Claude Code, try these queries:
+📱 **Desktop App:** Try these queries:
 
 ```
 What are my open Jira issues?
@@ -53,13 +54,13 @@ Search Confluence for "onboarding guide"
 
 Follow the 3 steps above:
 
-1. **Terminal:** `claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp`
-2. **Claude Code:** `/mcp` → select `atlassian` → Authenticate
-3. **Claude Code:** Try `What are my open Jira issues?`
+1. 💻 **Terminal:** `claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp`
+2. 📱 **Desktop App:** `/mcp` → select `atlassian` → Authenticate
+3. 📱 **Desktop App:** Try `What are my open Jira issues?`
 
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 
 ## QUIZ
 
@@ -81,4 +82,4 @@ AskUserQuestion({
 Correct answer: "MCP Server"
 
 If correct: "Correct! Jira & Confluence connect through an MCP server — different from Slack's plugin approach. The nice thing is one MCP server gives you both Jira and Confluence!"
-If incorrect: "Jira & Confluence use the **MCP server** method. Unlike Slack's plugin, you add an MCP server with `claude mcp add`. One connection covers both tools."
+If incorrect: "Jira & Confluence use the **MCP server** method. Unlike Slack's plugin, you add an MCP server with `claude mcp add` in Terminal. One connection covers both tools."

@@ -1,91 +1,87 @@
-# Block 1: Install Claude Code in Terminal
+# Block 1: Install Claude Code in Claude Desktop App
 
 ## EXPLAIN
 
-Before we connect any tools, we need to make sure **Claude Code** is installed in your terminal. The `/mcp` command and plugin installs all require the `claude` CLI to be available.
+Before we connect any tools, we need **Claude Code** running. Claude Code is the powerful engine inside your Claude Desktop App that can connect to external tools, run commands, and automate your work.
 
-### What is Claude Code (CLI)?
+### What is Claude Code?
 
-In Day 1, you may have used the **Claude Desktop App** (the GUI). Claude Code is the **terminal version** — it runs inside your Terminal app and gives you access to powerful features like:
+In Day 1, you used the **Claude Desktop App** to have conversations. Claude Code is a **feature inside the Desktop App** that gives you access to powerful capabilities like:
 
 - `/mcp` — manage tool connections
-- `claude plugin install` — install plugins (like Slack)
-- `claude mcp add` — add MCP servers (like Jira)
+- Plugins — install connectors (like Slack)
+- MCP servers — connect to tools (like Jira, HubSpot)
+- CLI tools — work with services (like Google Workspace)
 
-### How to Install
+### How to Install Claude Code in Desktop App
 
-#### Step 1: Open your Terminal
+#### Step 1: Open Claude Desktop App
 
-On Mac: Press `Cmd + Space`, type "Terminal", and press Enter.
+Launch the Claude Desktop App you installed on Day 1.
 
-#### Step 2: Install Claude Code
+#### Step 2: Enable Claude Code
 
-Run this command:
+In the Claude Desktop App:
+1. Click on **Claude Code** in the bottom-left corner (or look for a terminal icon)
+2. Follow the prompts to enable Claude Code
+3. You may need to grant Terminal access permissions
 
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
+> If you don't see the Claude Code option, make sure your Desktop App is up to date. Go to **claude.ai/download** and reinstall the latest version.
+
+#### Step 3: Verify it's working
+
+Once Claude Code is enabled, you should be able to type commands like `/mcp` in your Claude Desktop App chat. Try it!
+
+### Why Do We Need This?
+
+| Feature | Claude Desktop App alone | With Claude Code enabled |
+|---------|------------------------|-------------------------|
+| Chat with Claude | Yes | Yes |
+| Connect external tools (Slack, Jira, etc.) | No | Yes |
+| Install plugins | No | Yes |
+| Run terminal commands | No | Yes |
+| Build skills & automations | Limited | Yes |
+
+### Need Terminal for Some Steps
+
+Some tool connections require running commands in the **Terminal** app. Don't worry — we'll guide you through each step. When Terminal is needed, we'll clearly label it:
+
 ```
-
-This downloads and installs Claude Code automatically — no extra dependencies needed.
-
-#### Step 3: Verify the installation
-
-```bash
-claude --version
-```
-
-You should see a version number like `2.x.x`. If you see it, you're good to go!
-
-#### Step 4: Launch Claude Code
-
-```bash
-claude
-```
-
-This opens Claude Code in your terminal. You should see a prompt where you can type messages to Claude.
-
-> **To quit Claude Code**, type `/exit` and press Enter.
-
-### Already Installed?
-
-If you already have Claude Code from Day 1, just run the same install command again to update:
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
+📱 Desktop App: things you do in Claude Desktop App
+💻 Terminal: things you do in the Terminal app
 ```
 
 ## EXECUTE
 
-Follow the steps above:
+1. **Open Claude Desktop App**
+2. **Enable Claude Code** — look for the Claude Code option in the bottom-left
+3. **Test it** — type `/mcp` in your chat to see if Claude Code is working
 
-1. **Open Terminal**
-2. **Install:** `curl -fsSL https://claude.ai/install.sh | bash`
-3. **Verify:** `claude --version`
-4. **Launch:** `claude`
+If you see the MCP management screen (even if it's empty), you're ready to connect tools!
 
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 
 ## QUIZ
 
 ```
 AskUserQuestion({
   "questions": [{
-    "question": "What command do you use to verify Claude Code is installed correctly?",
+    "question": "Where do you enable Claude Code?",
     "header": "Install Quiz",
     "options": [
-      {"label": "claude --version", "description": "Check the installed version"},
-      {"label": "claude --check", "description": "Run a check command"},
-      {"label": "which claude", "description": "Find the claude binary location"},
-      {"label": "claude status", "description": "Show Claude Code status"}
+      {"label": "In the Claude Desktop App (bottom-left corner)", "description": ""},
+      {"label": "By downloading a separate application", "description": ""},
+      {"label": "Through your web browser at claude.ai", "description": ""},
+      {"label": "In your computer's System Settings", "description": ""}
     ],
     "multiSelect": false
   }]
 })
 ```
 
-Correct answer: "claude --version"
+Correct answer: "In the Claude Desktop App (bottom-left corner)"
 
-If correct: "That's right! `claude --version` shows the installed version number, confirming Claude Code is ready to use."
-If incorrect: "The command to verify your installation is `claude --version`. If it shows a version number, you're all set!"
+If correct: "That's right! Claude Code lives inside the Claude Desktop App. Once enabled, you get access to tool connections, plugins, and all the powerful features we'll use today."
+If incorrect: "Claude Code is enabled inside the **Claude Desktop App** itself — look for it in the bottom-left corner. It's not a separate download. Once enabled, you can use commands like `/mcp` to manage tool connections."

@@ -44,7 +44,7 @@ When you're done, type **"next"** or **"quiz"** to continue.
 | Block | File | Topic |
 |-------|------|-------|
 | 0 | `references/block0-why-connect-tools.md` | Why connect tools + connection methods overview |
-| 1 | `references/block1-install-claude-code.md` | Install Claude Code in Terminal |
+| 1 | `references/block1-install-claude-code.md` | Install Claude Code in Claude Desktop App |
 | 2 | `references/block2-connect-slack.md` | Step 1: Connect Slack |
 | 3 | `references/block3-connect-jira-confluence.md` | Step 2: Connect Jira & Confluence |
 | 4 | `references/block4-connect-google-workspace.md` | Step 3: Connect Google Workspace |
@@ -58,7 +58,7 @@ When you're done, type **"next"** or **"quiz"** to continue.
 - One block at a time
 - Before Block 1, briefly check which tools the participant uses (Slack, Google Workspace, Jira, Confluence, HubSpot)
 - Walk through each step carefully — these are non-engineers
-- Each block has exact terminal commands and Claude Code commands to follow
+- Each block has step-by-step instructions for Claude Desktop App (and Terminal when needed)
 - If something fails, troubleshoot patiently before moving on
 - Language: English
 - Tone: patient, encouraging — tool setup can be frustrating
@@ -74,7 +74,7 @@ AskUserQuestion({
     "header": "Day 2: Connect Tools",
     "options": [
       {"label": "Block 0: Why Connect Tools?", "description": "Overview of how Claude connects to external tools"},
-      {"label": "Block 1: Install Claude Code", "description": "Install Claude Code CLI in your terminal"},
+      {"label": "Block 1: Install Claude Code", "description": "Install Claude Code inside Claude Desktop App"},
       {"label": "Block 2: Connect Slack", "description": "Install Slack plugin and test it"},
       {"label": "Block 3: Connect Jira & Confluence", "description": "Connect Atlassian tools via MCP"},
       {"label": "Block 4: Google Workspace", "description": "Connect Google Calendar, Drive, Docs, and more"},

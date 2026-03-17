@@ -1,4 +1,4 @@
-# Block 1: Connect Slack
+# Block 2: Connect Slack
 
 ## EXPLAIN
 
@@ -8,7 +8,7 @@ Let's connect your first tool — **Slack**. This is the easiest one because it 
 
 #### Step 1: Install the Slack plugin
 
-In your **Terminal** (outside Claude Code), run:
+💻 **Terminal:** Open your Terminal app and run:
 
 ```bash
 claude plugin install slack
@@ -16,9 +16,10 @@ claude plugin install slack
 
 This downloads and sets up the Slack connector automatically.
 
-#### Step 2: Authenticate in Claude Code
+#### Step 2: Authenticate in Claude Desktop App
 
-1. Open Claude Code (type `claude` in your terminal)
+📱 **Desktop App:**
+1. Go back to your Claude Desktop App
 2. Type `/mcp` and press Enter
 3. Select **`plugin:slack:slack`** from the list
 4. Select **"Authenticate"**
@@ -26,7 +27,7 @@ This downloads and sets up the Slack connector automatically.
 
 #### Step 3: Test it!
 
-Back in Claude Code, try this query:
+📱 **Desktop App:** Try this query:
 
 ```
 What's the most recent message in #swingvy_general?
@@ -39,11 +40,13 @@ If Claude reads your Slack channel and shows you the message — congratulations
 | Problem | Solution |
 |---------|----------|
 | Plugin install fails | Check your internet connection, try again |
-| Authentication page won't open | Copy the URL from terminal and paste in your browser |
+| Authentication page won't open | Copy the URL and paste in your browser |
 | "Channel not found" | Check the exact channel name (case-sensitive) |
 | Can't read messages | You may need to be a member of that channel |
 
 ### Useful Commands
+
+💻 **Terminal:** You can manage connections from Terminal if needed:
 
 ```bash
 claude mcp list          # Verify Slack appears in the list
@@ -54,13 +57,13 @@ claude mcp remove <name> # Remove if you need to start over
 
 Follow the 3 steps above:
 
-1. **Terminal:** `claude plugin install slack`
-2. **Claude Code:** `/mcp` → select `plugin:slack:slack` → Authenticate
-3. **Claude Code:** Try `What's the most recent message in #swingvy_general?`
+1. 💻 **Terminal:** `claude plugin install slack`
+2. 📱 **Desktop App:** `/mcp` → select `plugin:slack:slack` → Authenticate
+3. 📱 **Desktop App:** Try `What's the most recent message in #swingvy_general?`
 
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 
 ## QUIZ
 
@@ -81,5 +84,5 @@ AskUserQuestion({
 
 Correct answer: "Plugin"
 
-If correct: "Right! Slack uses the plugin method — the simplest way to connect a tool. Just one command to install, then authenticate through `/mcp`."
+If correct: "Right! Slack uses the plugin method — the simplest way to connect a tool. Just one command to install, then authenticate through `/mcp` in your Desktop App."
 If incorrect: "Slack uses the **plugin** method — it's the easiest of the three. Plugins are one-command installs that handle all the setup for you."

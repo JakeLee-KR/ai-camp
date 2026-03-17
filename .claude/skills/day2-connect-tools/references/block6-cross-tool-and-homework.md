@@ -67,16 +67,14 @@ By now you should have:
 | Google Workspace | CLI Tool (gws) | Connected |
 | HubSpot | MCP + OAuth | Optional |
 
-### Useful Management Commands
+### Managing Your Connections
 
+📱 **Desktop App:** Type `/mcp` to view and manage all your connections, re-authenticate, or remove a connection.
+
+💻 **Terminal** (alternative):
 ```bash
 claude mcp list          # See all your connections
 claude mcp remove <name> # Remove a connection
-```
-
-Inside Claude Code:
-```
-/mcp                     # View and manage connections, re-authenticate
 ```
 
 ---
@@ -109,23 +107,25 @@ Think about tasks where you currently:
 
 ## EXECUTE
 
+📱 **Desktop App:**
+
 1. Try a cross-tool query that helps your actual work
-2. Create your automation ideas file:
+2. Create your automation ideas file — type this in your Desktop App:
 
 ```
-Ask Claude: "Create a file called automation-ideas.md with 3 task
+Create a file called automation-ideas.md with 3 task
 automation ideas based on the tools I have connected. For each idea:
 - The task I do manually today
 - Which tools are involved
 - What the automated version would look like
-- How much time it would save per week"
+- How much time it would save per week
 ```
 
 This file will be your starting point for Day 3.
 
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 
 ## QUIZ
 
