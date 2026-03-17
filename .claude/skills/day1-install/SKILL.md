@@ -17,16 +17,17 @@ This skill teaches non-engineers to understand GUI vs CLI, install the Claude De
 
 ```
 ┌─ Phase A (Turn 1) ─────────────────────────────────────┐
-│ 1. Read the block's reference file (EXPLAIN section)    │
-│ 2. Explain the concept in plain, friendly language      │
-│ 3. Read the EXECUTE section                             │
-│ 4. Say "Try it yourself now" with clear instructions    │
-│ 5. STOP HERE. End the turn.                             │
+│ 1. Print the BLOCK BANNER (see below)                   │
+│ 2. Read the block's reference file (EXPLAIN section)    │
+│ 3. Explain the concept in plain, friendly language      │
+│ 4. Read the EXECUTE section                             │
+│ 5. Say "Try it yourself now" with clear instructions    │
+│ 6. STOP HERE. End the turn.                             │
 │                                                         │
 │ DO NOT: ask questions, run quizzes, call AskUserQuestion│
 └─────────────────────────────────────────────────────────┘
 
-  ⬇️ User comes back with "done", "next", "finished", etc.
+  ⬇️ User comes back with "done", "next", "quiz", etc.
 
 ┌─ Phase B (Turn 2) ─────────────────────────────────────┐
 │ 1. Read the block's QUIZ section                        │
@@ -37,15 +38,28 @@ This skill teaches non-engineers to understand GUI vs CLI, install the Claude De
 └─────────────────────────────────────────────────────────┘
 ```
 
+### Block Banner
+
+At the **very start** of every Phase A, print this banner so the user can easily find where the new block begins:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📘 BLOCK {N}: {BLOCK TITLE}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+This makes it easy to scroll up and find where each block starts.
+
 ### Mandatory rules
-1. **Phase A: NO AskUserQuestion** — explain + guide → Stop
-2. **Phase A: NO quiz** — quiz is Phase B only
-3. **Never combine EXPLAIN + QUIZ in one turn**
-4. Phase A must end with:
+1. **Phase A: Start with BLOCK BANNER** — always print it first
+2. **Phase A: NO AskUserQuestion** — explain + guide → Stop
+3. **Phase A: NO quiz** — quiz is Phase B only
+4. **Never combine EXPLAIN + QUIZ in one turn**
+5. Phase A must end with:
 ```
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 ```
 
 ---

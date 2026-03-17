@@ -16,15 +16,25 @@ This skill teaches participants to connect their daily work tools (Slack, Jira, 
 ### Each block = 2 turns
 
 ```
-Phase A: Explain + Execute instructions → STOP (no questions)
+Phase A: Print BLOCK BANNER → Explain + Execute instructions → STOP (no questions)
 Phase B: Quiz + feedback → next block
+```
+
+### Block Banner
+
+At the **very start** of every Phase A, print this banner so the user can easily find where the new block begins:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📘 BLOCK {N}: {BLOCK TITLE}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 Phase A must end with:
 ```
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 ```
 
 ---

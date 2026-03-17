@@ -14,15 +14,25 @@ This skill guides participants through creating their first reusable Claude Code
 > Same 2-turn protocol. Never violate.
 
 ```
-Phase A: Explain + Execute instructions → STOP
+Phase A: Print BLOCK BANNER → Explain + Execute instructions → STOP
 Phase B: Quiz + feedback → next block
+```
+
+### Block Banner
+
+At the **very start** of every Phase A, print this banner so the user can easily find where the new block begins:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📘 BLOCK {N}: {BLOCK TITLE}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 Phase A must end with:
 ```
 ---
 👆 Try this yourself now.
-When you're done, type "done" or "next" to continue.
+When you're done, type **"next"** or **"quiz"** to continue.
 ```
 
 ---
