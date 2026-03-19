@@ -52,7 +52,7 @@ After installation, verify: `git --version`
 
 ## Step 3: Install Claude Code (CLI)
 
-Claude Code is the command-line version of Claude. Even though you'll mainly use the Desktop App, we need the CLI installed because Day 2's tool connections (Slack, Jira, Google, etc.) require terminal commands.
+Claude Code is the command-line version of Claude. While you'll mainly use the Desktop App, having the CLI installed lets you experience working with Claude directly in the Terminal — a powerful skill you'll explore during the camp.
 
 ### Mac
 
