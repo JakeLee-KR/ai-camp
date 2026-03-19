@@ -48,6 +48,18 @@ team-skills/
 │           └── weekly-report/SKILL.md
 ```
 
+### Step 0: Sign Up for a GitHub Account
+
+Before using the team repo, you need a **GitHub account**. If you already have one, skip to the next section.
+
+1. Go to **https://github.com/signup**
+2. Enter your **work email address**
+3. Create a **password** and choose a **username**
+4. Complete the verification steps
+5. Once signed up, let your instructor know your GitHub username so they can add you to the team repo
+
+> **Already have an account?** Make sure you're logged in at github.com before continuing.
+
 ### Git for Non-Engineers (Step by Step)
 
 **First time setup:**
