@@ -1,6 +1,6 @@
 # Swingvy AI Camp — Pre-Camp Setup Guide
 
-Complete these steps **before Day 1** of the AI Camp. If you get stuck, ask in **#claude-code** on Slack.
+Complete these steps **before Day 1** of the AI Camp. If you get stuck, ask in **#ai-camp** on Slack.
 
 ---
 
@@ -156,4 +156,4 @@ Before Day 1, confirm you have:
 
 ---
 
-Need help? Post in **#claude-code** on Slack or ask your camp instructor.
+Need help? Post in **#ai-camp** on Slack or ask your camp instructor.
