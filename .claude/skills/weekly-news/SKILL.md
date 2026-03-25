@@ -1,5 +1,5 @@
 ---
-name: daily-news
+name: weekly-news
 description: "Ask the user for their industry and department, then surface 5 personalized news items from the past week. Use for 'weekly news', 'news digest', 'what's new in', 'latest news about'."
 ---
 
@@ -14,7 +14,7 @@ description: "Ask the user for their industry and department, then surface 5 per
 ## PROCESS
 
 **Step 1: Check for saved preferences**
-Check if `~/.claude/daily-news-prefs.json` exists and is readable.
+Check if `~/.claude/weekly-news-prefs.json` exists and is readable.
 
 - **If it exists:** Read the file, load `industry` and `department`, then ask:
   ```
@@ -50,14 +50,7 @@ Ask the user to select their department:
 - Product Management (PM)
 - QA
 
-**Step 3b: Ask about scheduling (first run only)**
-"Would you like this digest delivered automatically on a schedule?"
-- Yes → ask: "What time? (e.g. 9AM)" and "Which days? (e.g. every Monday / weekdays / Mon,Wed,Fri)"
-  - Convert to a cron expression and create a scheduled task using the `create_scheduled_task` tool
-  - Confirm: "Done! I'll send your news digest at [time] on [days]."
-- No / Skip → continue without scheduling
-
-Then save the chosen values to `~/.claude/daily-news-prefs.json`:
+Then save the chosen values to `~/.claude/weekly-news-prefs.json`:
 ```json
 {
   "industry": "[chosen industry]",
@@ -98,17 +91,17 @@ Good morning! Today is [Day], [Month DD YYYY].
 Here's your weekly digest: [TOPIC] ☕
 ```
 
-**Step 5: Search for news**
+**Step 6: Search for news**
 Run these 4 searches in parallel using the WebSearch tool:
 1. `[TOPIC] news [current year]`
 2. `[TOPIC] announcement release [current year]`
 3. `[TOPIC] tool update case study [current year]`
 4. `[TOPIC] site:twitter.com OR site:x.com OR site:threads.net`
 
-**Step 6: Pick the 5 best results**
+**Step 7: Pick the 5 best results**
 Select the 5 most recent and relevant items. Prefer results from the last 7 days; fall back to 30 days if needed. Include at least 1 from X or Threads if available.
 
-**Step 7: Format the digest**
+**Step 8: Format the digest**
 Present each item as:
 ```
 [N]. 📰 [HEADLINE]
@@ -118,12 +111,12 @@ Present each item as:
 ```
 Label X posts as `🐦 X (Twitter)` and Threads posts as `🧵 Threads`.
 
-**Step 8: Close with a takeaway**
+**Step 9: Close with a takeaway**
 ```
 💡 This week's takeaway: [one sentence connecting a theme across the 5 items]
 ```
 
-**Step 9: Send via Slack DM**
+**Step 10: Send via Slack DM**
 Look up the current user's Slack ID dynamically via the Slack MCP tool (search by name or email), then send the full digest as a DM to that user.
 
 ## OUTPUT

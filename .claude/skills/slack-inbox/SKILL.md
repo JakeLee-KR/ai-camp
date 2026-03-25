@@ -16,20 +16,6 @@ Gives you a prioritized list so you know exactly who needs a reply and what you 
 - Slack account (via MCP — already connected)
 - No user input required on each run
 
-## First-run setup
-On the very first run (check by whether `~/.claude/slack-inbox-prefs.json` exists):
-Ask: "Would you like this to run automatically on a schedule?"
-- Yes → ask: "What time? (e.g. 9AM)" and "Which days? (e.g. weekdays / every day)"
-  - Convert to a cron expression and create a scheduled task using `create_scheduled_task`
-  - Confirm: "Done! I'll check your Slack inbox at [time] on [days]."
-- No / Skip → continue without scheduling
-
-Save to `~/.claude/slack-inbox-prefs.json`:
-```json
-{ "setup_complete": true }
-```
-On subsequent runs, skip this question entirely.
-
 ## Steps
 
 **Step 1: Fetch direct mentions**

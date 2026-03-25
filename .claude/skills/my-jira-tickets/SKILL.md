@@ -59,13 +59,6 @@ Save to `~/.claude/jira-ticket-prefs.json`:
 }
 ```
 
-**Question 4 — Schedule (first run only):**
-"Would you like this to run automatically on a schedule?"
-- Yes → ask: "What time? (e.g. 9AM)" and "Which days? (e.g. weekdays / every day / Mon,Wed,Fri)"
-  - Convert to a cron expression and create a scheduled task using the `create_scheduled_task` tool
-  - Confirm: "Done! I'll run /my-jira-tickets for you at [time] on [days]."
-- No / Skip → continue without scheduling
-
 On subsequent runs, load silently — no questions asked. User can say "change my Jira filters" to update.
 
 ## Steps

@@ -3,7 +3,7 @@ name: morning-valet
 description: "Run all morning skills in sequence: Slack inbox, Jira tickets, and weekly news digest. Use for 'good morning', 'morning briefing', 'start my day', 'daily briefing', 'morning routine'."
 ---
 
-# Morning Butler
+# Morning Valet
 
 ## What this skill does
 Your personal morning briefing. Runs three skills back-to-back and presents a unified summary so you start the day knowing exactly what needs your attention — without switching between tools.
@@ -12,6 +12,20 @@ Your personal morning briefing. Runs three skills back-to-back and presents a un
 1. 📬 **Slack Inbox** — who mentioned you, what threads are active
 2. 📋 **Jira Tickets** — what to work on today
 3. 📰 **Weekly News** — what's happening in your industry
+
+## First-run setup
+On the very first run (check by whether `~/.claude/morning-valet-prefs.json` exists):
+Ask: "Would you like your morning briefing delivered automatically on a schedule?"
+- Yes → ask: "What time? (e.g. 9AM)" and "Which days? (e.g. weekdays / every day)"
+  - Convert to a cron expression and create a scheduled task using `create_scheduled_task`
+  - Confirm: "Done! I'll run your morning briefing at [time] on [days]."
+- No / Skip → continue without scheduling
+
+Save to `~/.claude/morning-valet-prefs.json`:
+```json
+{ "setup_complete": true }
+```
+On subsequent runs, skip this question and go straight to the briefing.
 
 ## Steps
 
@@ -32,8 +46,8 @@ Execute the `/my-jira-tickets` skill in full.
 - Display results under the header: `━━━ 📋 JIRA ━━━`
 
 **Step 4: Run Weekly News**
-Execute the `/daily-news` skill in full.
-- Load prefs from `~/.claude/daily-news-prefs.json` (industry + department)
+Execute the `/weekly-news` skill in full.
+- Load prefs from `~/.claude/weekly-news-prefs.json` (industry + department)
 - If prefs exist, skip questions and go straight to topic suggestion → search → digest
 - Display results under the header: `━━━ 📰 NEWS ━━━`
 
@@ -64,6 +78,6 @@ Keep each section's output identical to what the individual skill would produce.
 - Never stop early — always attempt all three skills even if one fails
 
 ## Notes
-- On first run, `/daily-news` may ask for industry + department + schedule preferences. That's expected — it only happens once.
+- On first run, `/weekly-news` may ask for industry + department + schedule preferences. That's expected — it only happens once.
 - On first run, `/my-jira-tickets` may ask for filter preferences. That's expected — it only happens once.
-- After first-run setup is complete, `/morning-butler` runs fully automatically with no questions.
+- After first-run setup is complete, `/morning-valet` runs fully automatically with no questions.
