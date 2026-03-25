@@ -5,7 +5,11 @@ description: "Internal Camp Day 5: Ship your project. Build a complete solution,
 
 # Day 5: Ship Your Project
 
-The final day. Each participant builds a complete, working solution that improves their actual job, writes a PRD, demos live, and submits to the team repository.
+## 🎯 The Goal
+
+> **Ship a real project and demo it to the team.**
+>
+> By the end of today, you'll have built a complete solution that solves a real problem from your job, written a PRD, presented a live demo, and submitted your project to the team repository.
 
 ---
 
@@ -141,15 +145,17 @@ Guide each participant to prepare a 3-minute demo:
 
 ## Submission (PR)
 
-After demo, guide the PR submission:
+After demo, guide the PR submission to **https://github.com/Swingvy/ai-camp-demo-day**:
 
-1. Confirm GitHub ID via `gh auth status`
-2. Create branch: `project/{github-id}`
-3. Add files: `{github-id}/PRD.md` + skill files
-4. Commit: `feat: {github-id} final project submission`
-5. Push + create PR
+1. Clone repo: `gh repo clone Swingvy/ai-camp-demo-day`
+2. Create branch: `git checkout -b project/{github-id}`
+3. Create folder: `mkdir -p {github-id}/skills`
+4. Copy files: PRD.md + skill files into `{github-id}/`
+5. Commit: `git add {github-id}/ && git commit -m "feat: {github-id} final project"`
+6. Push: `git push origin project/{github-id}`
+7. Create PR: `gh pr create --title "Project: {github-id}"`
 
-Step-by-step guidance for non-engineers (same pattern as camp-1 day6-prd-submit).
+Block 4 reference file has the full step-by-step Git guide for non-engineers.
 
 ---
 
@@ -185,7 +191,7 @@ Next steps:
 - Use your skills daily
 - Add new skills as you find new repetitive tasks
 - Help a colleague get started
-- Share improvements in #claude-code
+- Share improvements in #ai-camp
 ```
 
 ---

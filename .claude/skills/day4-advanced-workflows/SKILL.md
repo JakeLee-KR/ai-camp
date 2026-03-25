@@ -5,7 +5,11 @@ description: "Internal Camp Day 4: Advanced skills with multi-skill workflows, c
 
 # Day 4: Advanced Skills & Workflows
 
-This skill teaches participants to level up with multi-skill workflows (chaining), skill enhancement techniques, and sharing skills across the team.
+## 🎯 The Goal
+
+> **Level up your skills with chaining, enhancement, and team sharing.**
+>
+> By the end of today, you'll have a multi-step workflow (Skill A → Skill B), enhanced with validation and formatting, and shared with the team via a Git repository.
 
 ---
 
