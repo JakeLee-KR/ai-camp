@@ -6,7 +6,7 @@ description: "Run all morning skills in sequence: Slack inbox, Jira tickets, wee
 # Morning Valet
 
 ## What this skill does
-Your personal morning briefing. Runs three skills back-to-back and presents a unified summary so you start the day knowing exactly what needs your attention — without switching between tools.
+Your personal morning briefing. Runs four skills back-to-back and presents a unified summary so you start the day knowing exactly what needs your attention — without switching between tools.
 
 **Order of execution:**
 1. 📬 **Slack Inbox** — who mentioned you, what threads are active
@@ -60,7 +60,7 @@ Execute the `/standup-draft` skill in full.
 - Ask: "Post this to the standup channel? (yes / no)"
 
 **Step 6: Close with a daily focus prompt**
-After all three sections, print:
+After all four sections, print:
 ```
 ━━━ 🎯 TODAY'S FOCUS ━━━
 Based on the above, here are your top 3 priorities for today:
@@ -82,7 +82,7 @@ Keep each section's output identical to what the individual skill would produce.
   ━━━ 📬 SLACK ━━━
   ⚠️  Slack is not connected. Skipping this section.
   ```
-- If all three fail: "All tools are currently disconnected. Please check your MCP settings in Claude Desktop."
+- If all four fail: "All tools are currently disconnected. Please check your MCP settings in Claude Desktop."
 - Never stop early — always attempt all four skills even if one fails
 
 ## Notes
