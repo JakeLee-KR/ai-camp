@@ -2,7 +2,7 @@
 
 **Your personal morning briefing — one command to start your day.**
 
-Instead of opening Slack, then Jira, then catching up on industry news separately, Morning Valet does all three for you in one go and tells you exactly what to focus on today.
+Instead of opening Slack, then Jira, then catching up on industry news, then staring at a blank standup box, Morning Valet does all four for you in one go and tells you exactly what to focus on today.
 
 ---
 
@@ -13,7 +13,8 @@ Type `/morning-valet` and Claude will automatically:
 1. **Check your Slack** — shows who mentioned you and what threads need a reply
 2. **Check your Jira tickets** — shows what's blocked, in progress, or waiting to be started
 3. **Deliver your weekly news** — 5 curated articles relevant to your industry and role
-4. **Give you a focus list** — your top 3 priorities for the day, based on what it found
+4. **Draft your standup** — ready-to-paste update in your team's format
+5. **Give you a focus list** — your top 3 priorities for the day, based on what it found
 
 The whole thing takes about 30 seconds and replaces the usual 10–15 minutes of morning tab-switching.
 
@@ -69,6 +70,25 @@ Let's get you ready for the day...
    Source: TechCrunch · Mar 24
    Summary: GitHub announced...
 
+━━━ 📝 STANDUP ━━━
+1. Today, I'm 🙂
+
+2. Done
+• Moved LV-959 (Story 3-3) to QA Ready
+• Completed CS-6050 (Cannot approve payroll)
+
+3. Delayed
+
+4. Todo today
+• LV-968 [QA] Story 3-1b — Re-visit story 1-3
+
+5. Blockage
+
+6. ETC
+
+---
+Post to Slack? (yes / no)
+
 ━━━ 🎯 TODAY'S FOCUS ━━━
 1. Reply to Sarah's message in #qa-team
 2. Continue work on QA-204
@@ -94,6 +114,7 @@ Morning Valet is a **skill that chains other skills** together. It calls:
 | `/slack-inbox` | Checks Slack mentions and thread activity |
 | `/my-jira-tickets` | Fetches your current sprint tickets |
 | `/weekly-news` | Searches for industry news and delivers a digest |
+| `/standup-draft` | Generates your standup in the team's 6-section format |
 
 You can also run each of these individually if you only need one section.
 
