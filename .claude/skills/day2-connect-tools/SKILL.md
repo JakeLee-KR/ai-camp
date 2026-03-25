@@ -5,7 +5,11 @@ description: "Internal Camp Day 2: Connect your work tools to Claude Code. Cover
 
 # Day 2: Connect Your Work Tools
 
-This skill teaches participants to connect their daily work tools (Slack, Jira, Confluence, Google Workspace, HubSpot) to Claude Code using **Settings → Connectors → Browse Connectors** in the Claude Desktop App, then run cross-tool queries.
+## 🎯 The Goal
+
+> **Claude is connected to your daily work tools.**
+>
+> By the end of today, Claude will be able to read your Slack, check your calendar, look up Jira tickets, and query HubSpot — all through simple Connectors in the Desktop App. You'll run your first cross-tool query.
 
 ---
 

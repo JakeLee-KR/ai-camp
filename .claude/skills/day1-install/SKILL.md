@@ -5,7 +5,11 @@ description: "Internal Camp Day 1: Install Claude Code & first conversations. Co
 
 # Day 1: Install & First Conversations
 
-This skill teaches non-engineers to understand GUI vs CLI, install the Claude Desktop App, set up CLAUDE.md, and have their first productive conversations including web search and Plan Mode.
+## 🎯 The Goal
+
+> **Everyone has Claude set up and can hold a productive conversation.**
+>
+> By the end of today, you'll have the Claude Desktop App running, a personalized CLAUDE.md profile, and the confidence to use Claude for real work — including web search and Plan Mode.
 
 ---
 

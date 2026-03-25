@@ -5,7 +5,11 @@ description: "Internal Camp Day 3: Build your first Claude Code Skill. Covers sk
 
 # Day 3: Build Your First Skill
 
-This skill guides participants through creating their first reusable Claude Code Skill — from discovering existing skills on skills.sh, to understanding skill anatomy, to writing, testing, and refining a working SKILL.md using the Custom Skill Builder.
+## 🎯 The Goal
+
+> **You build your first reusable automation — a Claude Code Skill.**
+>
+> By the end of today, you'll have a working `/your-skill-name` command that automates a real repetitive task from your job. You'll test it, iterate on it, and demo it to the group.
 
 ---
 
