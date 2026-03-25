@@ -19,10 +19,12 @@ SOLUTION (1 sentence):
 in one command using Slack, Jira, and WebSearch, saving 10+ minutes every day."
 
 SKILLS I NEED:
-1. /morning-valet:  orchestrates the full morning briefing and daily focus summary
-2. /slack-inbox:    fetches direct mentions and unread channel/thread activity
+1. /morning-valet:   orchestrates the full morning briefing and daily focus summary
+2. /slack-inbox:     fetches direct mentions and unread channel/thread activity
 3. /my-jira-tickets: lists current sprint tickets grouped by status with clickable links
-4. /weekly-news:    delivers 5 personalized news items by industry + department via Slack DM
+4. /weekly-news:     delivers 5 personalized news items by industry + department via Slack DM
+5. /standup-draft:   generates a daily standup from Jira activity and yesterday's standup thread
+
 MCP CONNECTIONS NEEDED:
 - Slack:  to read mentions, threads, and send the news digest as a DM
 - Jira:   to fetch assigned tickets and filter by sprint/status
@@ -43,3 +45,4 @@ SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira,
 | My Jira Tickets | `/my-jira-tickets` | Lists your current sprint tickets grouped by status |
 | Weekly News | `/weekly-news` | Delivers 5 personalized news items based on your industry and department |
 | Daily Checklist | `/daily-checklist` | Shows a day-of-week task checklist to structure your day |
+| Standup Draft | `/standup-draft` | Generates a daily standup from Jira activity and yesterday's standup thread |
