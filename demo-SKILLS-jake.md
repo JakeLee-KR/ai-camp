@@ -72,6 +72,7 @@ SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira, new
 **Purpose:** One command to start your day. Runs all sub-skills and delivers a unified briefing.
 
 **How it works:**
+- **Pre-flight permission check** — before spawning subagents, calls one lightweight tool per integration (Slack, Jira, Calendar) in the main session. This triggers the permission dialog so the user can approve; subagents inherit the session approval and run without interruption. If a tool is denied, that section is skipped gracefully.
 - Parallel execution if the `Agent` tool is available (all subagents launch simultaneously, ~15–30s total); sequential fallback otherwise (Slack → Jira → News → Standup).
 - First-done, first-served display — sections print as each subagent finishes.
 - Closes with **🎯 Today's Focus** — top 3 priorities derived from the actual Slack + Jira results.
@@ -217,6 +218,13 @@ Notes:
        ▼  reads prefs + orchestrates
 /morning-valet
        │
+       ▼  Step 0: pre-flight (main session)
+       ├──→ slack_search_channels   ← triggers Slack permission prompt
+       ├──→ atlassianUserInfo       ← triggers Jira permission prompt
+       ├──→ gcal_list_calendars     ← triggers Calendar permission prompt
+       │    (user approves each → session-wide approval inherited by subagents)
+       │
+       ▼  Step 1: subagents (parallel)
        ├──→ /slack-inbox        (Slack MCP)
        ├──→ /my-jira-tickets    (Jira MCP + jira-ticket-prefs.json)
        ├──→ /weekly-news        (WebSearch + weekly-news-prefs.json, Mondays)
