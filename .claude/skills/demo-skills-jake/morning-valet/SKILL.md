@@ -41,7 +41,7 @@ Then fire ALL of the following in parallel — do not wait for one before starti
 | **Slack mentions** | Search for direct @mentions of current user, last 24h (48h on Mondays) |
 | **Slack channel activity** | Check threads/channels for new messages user hasn't replied to |
 | **Jira tickets** | Load `~/.claude/jira-ticket-prefs.json` (use silent defaults if missing), run JQL, fetch tickets |
-| **News search** | Load `~/.claude/weekly-news-prefs.json`, run 4 parallel searches for the saved topic |
+| **News search** | **Mondays only.** Check today's day of week — if Monday, load `~/.claude/weekly-news-prefs.json` and run 4 parallel searches for the saved topic. If not Monday, skip this fetch entirely. |
 | **Standup data** | Fetch: yesterday's Jira activity, today's open Jira tickets, yesterday's standup thread, today's calendar events |
 
 Wait for all fetches to complete before moving to Step 2.
@@ -56,11 +56,12 @@ Format and print under `━━━ 📋 JIRA ━━━`
 - Group by status: 🔴 BLOCKED → 🟡 IN PROGRESS → 🟢 TO DO → ⏳ RELEASE READY
 - Each ticket as `🔗 [TICKET-ID](url) Title — Status`
 
-**Step 4: Display News results**
-Format and print under `━━━ 📰 NEWS ━━━`
-- 5 most recent items, sorted by date
-- If fewer than 3 from past 7 days: show "📭 Not much this week — here are the most recent:"
-- If 0–1 results: "📭 Nothing special this week."
+**Step 4: Display News results (Mondays only)**
+- If today is **not Monday**: skip this section entirely — do not print the header.
+- If today is **Monday**: format and print under `━━━ 📰 NEWS ━━━`
+  - 5 most recent items, sorted by date
+  - If fewer than 3 from past 7 days: show "📭 Not much this week — here are the most recent:"
+  - If 0–1 results: "📭 Nothing special this week."
 
 **Step 5: Display Standup draft**
 Format and print under `━━━ 📝 STANDUP ━━━`
