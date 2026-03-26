@@ -37,6 +37,20 @@ SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira, new
 
 ---
 
+## Project Evaluation
+
+| Criterion | Result | Notes |
+|---|---|---|
+| **6x–10x productivity gap** | ✅ 10–15x | ~15 min morning routine → ~60 seconds with `/morning-valet` |
+| **Tasks I couldn't do before** | ✅ New capability | Cross-checking yesterday's standup vs Jira tickets was impossible manually |
+| **Good to delegate** | ✅ Perfect fit | Information gathering needs no judgment — Claude assembles, you decide |
+| **Worth sharing with team** | ✅ Ready | Works for any Swingvy member with Jira + Slack + Google Calendar connected |
+| **Will actually use** | ✅ Already in use | Built from real Jira data, matched to actual standup format |
+
+**Strongest story:** `/standup-draft` + Jira cross-check — flags promised tasks with no open ticket. Unique to a QA workflow, impossible to replicate manually at the same speed.
+
+---
+
 ## Skills in this repo
 
 | Skill | Command | What it does |
