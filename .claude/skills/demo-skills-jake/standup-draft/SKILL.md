@@ -37,7 +37,7 @@ Fetch recent messages from the standup Slack channel (ID: `C017BR4KUPL`) using `
 **Step 4: Fetch today's calendar**
 Use `gcal_list_events` to fetch today's Google Calendar events.
 - Time range: today from 00:00 to 23:59 local time
-- Filter out: all-day events, declined events, and personal/OOO blocks
+- Filter out: all-day events, declined events, personal/OOO blocks, and any event whose title contains "standup", "stand-up", "daily scrum", or "daily sync"
 - Keep: meetings with other attendees (1:1s, syncs, standups, reviews, etc.)
 - Format each as: `[HH:MM] Meeting title` (e.g. `10:00 1:1 with Jinyoung`)
 - If no meetings: skip — leave section 6 blank
