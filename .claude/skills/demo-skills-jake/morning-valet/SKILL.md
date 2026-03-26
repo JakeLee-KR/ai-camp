@@ -43,7 +43,7 @@ The base directory for this skill is shown at the top of this skill run (e.g. `/
 - `{base_dir}/standup-draft/SKILL.md` → Subagent C
 - `{base_dir}/weekly-news/SKILL.md` → Subagent D (only if today is Monday)
 
-Wait for all subagents to return, then proceed to Step 2.
+**First-done, first-served display:** Do NOT wait for all subagents before showing output. As each subagent returns its result, immediately print that section with its header — in whatever order they finish. After all sections have been printed, proceed to Step 2.
 
 **If `Agent` tool is NOT available — sequential fallback:**
 Read each SKILL.md directly using the base directory path and execute sequentially, printing each header before starting that fetch:
@@ -58,8 +58,8 @@ Read each SKILL.md directly using the base directory path and execute sequential
 [results]
 ```
 
-**Step 2: Assemble and display results**
-Display sections in order: Slack → Jira → News (skip if Subagent D returned SKIP or if not Monday) → Standup
+**Step 2: Daily focus prompt**
+Once all sections have been printed, proceed to the focus summary.
 
 **Step 6: Close with a daily focus prompt**
 Once all sections have arrived, print:
