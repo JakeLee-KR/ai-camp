@@ -77,16 +77,21 @@ On subsequent runs, load silently — no questions asked. User can say "change m
    - Base: `assignee = currentUser() AND sprint in openSprints()`
    - Exclude statuses: `AND status NOT IN ([exclude_statuses])`
    - Exclude self-moved: `AND NOT (status changed to "[status]" by currentUser())` for each item in `exclude_self_moved`
-   - Must-include: append `OR status IN ([must_include_statuses])` if set
+   - Must-include: if `must_include_statuses` is not empty, wrap the status exclusion in a group: `AND (status NOT IN ([exclude_statuses]) OR status IN ([must_include_statuses]))` — this ensures must-include statuses appear even if they'd normally be filtered out
    - Final: `ORDER BY updated DESC`
-   - Example output: `assignee = currentUser() AND sprint in openSprints() AND status NOT IN (Done, Closed, Cancelled) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC`
+   - Example (without must-include): `assignee = currentUser() AND sprint in openSprints() AND status NOT IN (Done, Closed, Cancelled) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC`
+   - Example (with must-include `In Review`): `assignee = currentUser() AND sprint in openSprints() AND (status NOT IN (Done, Closed, Cancelled) OR status IN ("In Review")) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC`
 3. Group tickets by status in this order:
    - 🔴 **BLOCKED** — status is Blocked
-   - 🔵 **WAITING FOR YOUR ACTION** — status is QA Ready (moved by someone else), In Review (peer review needed), or any status in `must_include_statuses` where you are the assignee and did not move it there yourself. These are tickets explicitly waiting for YOU to act on them.
+   - 🔵 **WAITING FOR YOUR ACTION** — status is QA Ready (moved by someone else), In Review (peer review needed), or any status in `must_include_statuses` where you are the assignee and did not move it there yourself.
+     - Note: `must_include_statuses` does NOT override tickets you moved into a status listed in `exclude_self_moved` — those remain auto-hidden.
+     These are tickets explicitly waiting for YOU to act on them.
    - 🟡 **IN PROGRESS** — status is In Progress
    - 🟢 **TO DO / BACKLOG** — status is Open or Backlog
    - ⏳ **RELEASE READY** — collapsed summary only
-4. For each ticket, check the latest comment — flag if there is a comment from someone else waiting for a response
+4. For each ticket, check the latest comment:
+   - If the latest comment is from someone else and it appears to be waiting on you, set “Action needed” accordingly and include the snippet (commenter + date).
+   - If there is no waiting comment, keep the output concise (e.g. “No new comments” / “Nothing to respond to”) so you don’t have to parse irrelevant text.
 5. Sort within each group by last updated date (most recent first)
 6. Format and display tickets by group; show Release Ready as a collapsed summary
    - For ticket links, always use the `webUrl` field from the Jira API response — never construct URLs manually
@@ -111,9 +116,9 @@ On subsequent runs, load silently — no questions asked. User can say "change m
 
 🔵 WAITING FOR YOUR ACTION
 • [TICKET-ID] Title of ticket
-  Status: QA Ready | Moved by: {name}, {date}
+  Status: QA Ready | Moved by: {name}, {date} | Latest comment: "{comment snippet}" — {commenter}, {date} (if any)
   🔗 [TICKET-ID](webUrl from Jira response)
-  👉 Action needed: Ready to test
+  👉 Action needed: Ready to test (or respond to waiting comment if present)
 
 🟢 TO DO / BACKLOG
 • [TICKET-ID] Title of ticket

@@ -87,7 +87,9 @@ Let's get you ready for the day...
 6. ETC
 
 ---
-Post to Slack? (yes / no)
+Post this to the standup channel?
+  [Button] Yes, post it
+  [Button] No, I'll copy-paste
 
 ━━━ 🎯 TODAY'S FOCUS ━━━
 1. Reply to Sarah's message in #qa-team

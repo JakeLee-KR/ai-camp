@@ -58,10 +58,7 @@ Read each SKILL.md directly using the base directory path and execute sequential
 [results]
 ```
 
-**Step 2: Daily focus prompt**
-Once all sections have been printed, proceed to the focus summary.
-
-**Step 6: Close with a daily focus prompt**
+**Step 2: Close with a daily focus prompt**
 Once all sections have arrived, print:
 ```
 ━━━ 🎯 TODAY'S FOCUS ━━━
@@ -74,8 +71,15 @@ Have a great day! 💪
 ```
 Derive the top 3 from the actual results — pick the highest-priority Slack mention and Jira tickets. Do not make up items.
 
+Priority rules for the “Today’s Focus” top 3:
+- Slack: prioritize `🔴 DIRECT MENTIONS (Action needed)` first; if none exist, use `CHANNEL & THREAD ACTIVITY` items marked `👉 Action needed`.
+- Jira: prioritize groups in this order: `🔴 BLOCKED` → `🔵 WAITING FOR YOUR ACTION` → `🟡 IN PROGRESS` → `🟢 TO DO / BACKLOG`.
+- Uniqueness: do not repeat the same Slack message or the same Jira ticket twice in the top 3.
+- If fewer than 3 eligible items exist, use the best available items; if nothing exists at all, print an honest fallback like “No actionable Slack mentions or Jira tickets found today.”
+
 ## Output format
-Sections appear in order: Slack → Jira → News (Mondays only) → Standup → Focus.
+If `Agent` is available, sections may appear in the order they finish (not necessarily Slack → Jira → News → Standup).
+If `Agent` is NOT available, sections appear in order: Slack → Jira → News (Mondays only) → Standup → Focus.
 Each section is separated by its header line (━━━ emoji TITLE ━━━).
 
 ## Error handling

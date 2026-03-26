@@ -11,7 +11,7 @@ Jira and Slack — no more staring at a blank screen trying to remember yesterda
 
 ## Steps
 
-**Phase A: Find standup channel + fetch all data in parallel**
+**Step 1: Find standup channel + fetch all data in parallel**
 First, determine the standup channel:
 - Check `~/.claude/morning-valet-prefs.json` for a `standup_channel_id` field — use it if present.
 - If not found, search Slack for a channel whose name contains "standup", "stand-up", or "daily" using `slack_search_channels`. Use the best match. Save the ID to `~/.claude/morning-valet-prefs.json` for next time.
@@ -26,10 +26,10 @@ Then fire ALL of the following in a single message — do not wait for one befor
 | **Slack blockers** | `slack_search_public_and_private` for direct mentions from yesterday that have no reply from current user |
 | **Calendar** | `gcal_list_events` for today 00:00–23:59, filter out all-day, declined, and standup/stand-up/daily-scrum events |
 
-Wait for all four fetches to complete, then move to Phase B.
+Wait for all five fetches to complete, then move to Step 2.
 
-**Phase B: Generate the standup draft**
-Using all data fetched in Step 1:
+**Step 2: Generate the standup draft**
+Using all data fetched above:
 Format the output using the team's standup form — 6 sections, bullet points, plain language:
 
 ```
@@ -63,14 +63,6 @@ Use plain, natural language. Keep each bullet to one line.
 Action verbs to use: Completed, Moved to QA, Reviewed, Fixed, Updated, Started, Commented on, Closed.
 For "Today, I'm" — pick an appropriate emoji based on workload (🙂 normal, 😅 busy, 😴 slow day, etc.).
 
-**Step 3: Ask if the user wants to post it**
-After showing the draft, use the `AskUserQuestion` tool with these exact options:
-- Question: "Post this to the standup channel?"
-- Option A: "Yes, post it" → post the draft as a new message to the standup channel found in Phase A
-- Option B: "No, I'll copy-paste" → display the draft cleanly and stop
-
-Do NOT use plain text "yes / no" — always use AskUserQuestion so the user gets a clickable button.
-
 ## Output format
 
 ```
@@ -93,14 +85,11 @@ Do NOT use plain text "yes / no" — always use AskUserQuestion so the user gets
 6. ETC
 • 10:00 1:1 with Jinyoung
 • 14:00 Backlog refinement
-
----
-Post to Slack? (yes / no)
 ```
 
 ## Error handling
 - If Jira MCP is not connected: "Jira is not connected. Writing standup from Slack activity only."
 - If no Jira activity found for yesterday: show "No Jira activity recorded yesterday." and continue
-- If Slack is not connected: skip the blocker check and the posting option; note "Slack not connected — copy and paste manually."
+- If Slack is not connected: skip the blocker check; note "Slack not connected — copy and paste manually."
 - If Google Calendar is not connected: skip Step 4 and leave section 6 blank; note "Calendar not connected — add meetings manually."
 - If it's Monday: automatically look back to Friday and note "(Friday's activity)" next to yesterday's items

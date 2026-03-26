@@ -20,7 +20,10 @@ Gives you a prioritized list so you know exactly who needs a reply and what you 
 
 **Step 1: Fetch direct mentions**
 Search Slack for messages that mention the current user directly.
-Use the Slack MCP search tool with query: `@[current_user_display_name]`
+Direct mentions include either:
+- the message contains `@{current_user_display_name}`
+- the message contains the Slack mention token for the user (often a `<@U...>`-style ID)
+Use the Slack MCP search tool with query matching both forms if your MCP supports it (otherwise, use the display-name query).
 Limit to results from the last 24 hours (or last 48 hours on Mondays to catch weekend messages).
 
 **Step 2: Fetch active channel/thread messages**
@@ -28,17 +31,19 @@ For each channel the user is a member of, check for recent messages the user has
 Focus on:
 - Threads the user participated in that have new replies
 - Channels where the user's name or work is referenced
+Do not include messages authored by the current user (only other people’s messages).
 Use the Slack MCP `slack_get_channel_history` or `slack_search_public_and_private` tools.
 Limit to the last 24 hours (or 48 hours on Mondays).
 
 **Step 3: Deduplicate**
-If a message appears in both mentions and channel activity, show it only once under "Mentions".
+If a message appears in both mentions and channel activity, show it only once under "Mentions" (DIRECT MENTIONS).
 
 **Step 4: Classify each message**
 Use these exact rules:
 
 - **Action needed** → someone @mentioned the current user directly by name or user ID in the message body. They are waiting for a response.
 - **FYI (cc)** → the current user was not directly @mentioned, but is in the channel or thread where this message appeared (e.g. they were cc'd by being a thread participant, or it's a channel they're in). No reply expected but worth knowing.
+- In the final output, any “Action needed” items must appear under `🔴 DIRECT MENTIONS` (never under the channel/thread activity section).
 
 **Step 5: Format and display**
 
@@ -52,15 +57,11 @@ Use these exact rules:
   "{message snippet}"
   👉 Action needed: Reply — @mentioned directly
 
-• #{channel} — {sender_name}, {time}
-  "{message snippet}"
-  📌 FYI (cc) — no reply needed
-
 ---
 💬 CHANNEL & THREAD ACTIVITY ({N})
 • #{channel} / 🧵 thread by {original_poster}, {time}
   Latest: "{message snippet}" — {sender_name}
-  👉 Action needed: Reply — @mentioned directly
+  📌 FYI (cc) — no reply needed
 
 • #{channel}, {time}
   "{message snippet}" — {sender_name}
