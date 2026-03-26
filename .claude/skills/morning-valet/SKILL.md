@@ -28,6 +28,25 @@ On subsequent runs, skip this question and go straight to the briefing.
 
 ## Steps
 
+**Step 0: Pre-flight — obtain tool permissions before spawning subagents**
+Subagents run headlessly and cannot show permission prompts. To avoid silent failures,
+call one lightweight tool from each integration in the main session first. This triggers
+the permission dialog so the user can approve, and subagents inherit the session approval.
+
+Make these calls (errors are fine — the goal is to trigger the prompt, not get data):
+- **Slack:** call `slack_search_channels` with query `"standup"`
+- **Jira:** call `atlassianUserInfo` with no arguments
+- **Google Calendar:** call `gcal_list_calendars` with no arguments
+
+Print before calling:
+```
+🔐 Checking tool permissions... (approve each prompt to continue)
+```
+
+If a tool is denied by the user: show a warning for that section and skip it.
+If a tool is approved (or already was): continue normally.
+After all three checks, proceed to Step 1.
+
 **Step 1: Greet + spawn all subagents simultaneously**
 Print immediately:
 ```
