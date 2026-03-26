@@ -55,16 +55,16 @@ Second AskUserQuestion call:
   - Blocked
 
 **Step 3: Write all three prefs files**
-For each file: if it already exists, **merge** the new fields into the existing content.
-Preserve existing fields like `schedule_asked`, `standup_channel_id`, `last_topic`, and any previously saved values.
-Only overwrite the fields listed below.
+For `weekly-news-prefs.json` and `jira-ticket-prefs.json`: if the file already exists, **merge** the new fields into the existing content, preserving any previously saved values.
 
-`~/.claude/weekly-news-prefs.json` — set these fields:
+For `morning-valet-prefs.json`: **always write fresh** — do not preserve any existing fields. This resets `schedule_asked` so that `/morning-valet` will ask the scheduling question again on the next run.
+
+`~/.claude/weekly-news-prefs.json` — merge these fields:
 ```json
 { "industry": "[Q1 answer]", "department": "[Q2 answer]", "setup_complete": true }
 ```
 
-`~/.claude/jira-ticket-prefs.json` — set these fields:
+`~/.claude/jira-ticket-prefs.json` — merge these fields:
 ```json
 {
   "exclude_statuses": ["[Q3 selections]"],
@@ -74,7 +74,7 @@ Only overwrite the fields listed below.
 }
 ```
 
-`~/.claude/morning-valet-prefs.json` — set these fields:
+`~/.claude/morning-valet-prefs.json` — **overwrite entirely** (do not preserve old fields):
 ```json
 { "setup_complete": true }
 ```
