@@ -8,8 +8,8 @@ description: "Run all morning skills in sequence: Slack inbox, Jira tickets, wee
 ## What this skill does
 Your personal morning briefing. Runs four skills back-to-back and presents a unified summary so you start the day knowing exactly what needs your attention — without switching between tools.
 
-**Execution model: first-done, first-served**
-Fire all data fetches simultaneously. As soon as each fetch completes, display that section immediately — do not wait for the others. Sections may appear out of order; that's expected and preferred over waiting.
+**Execution model: true parallel subagents**
+Use the `Agent` tool to spawn independent subagents simultaneously. Each subagent runs its own MCP calls in isolation and returns a formatted section. Spawn all agents in a single message — never one at a time.
 
 ## First-run setup
 On the very first run (check by whether `~/.claude/morning-valet-prefs.json` exists):
@@ -27,47 +27,80 @@ On subsequent runs, skip this question and go straight to the briefing.
 
 ## Steps
 
-**Step 1: Greet + launch all data fetches in parallel**
+**Step 1: Greet + spawn all subagents simultaneously**
 Print immediately:
 ```
 Good morning! 🌅 Today is [Day], [Month DD YYYY].
 Fetching your briefing... ⏳
 ```
 
-Then fire ALL of the following in parallel — do not wait for one before starting the next:
+Then use the `Agent` tool to launch ALL subagents **in a single message** — this is what makes it fast. Never spawn one at a time.
 
-| Fetch | What to do |
-|---|---|
-| **Slack mentions** | Search for direct @mentions of current user, last 24h (48h on Mondays) |
-| **Slack channel activity** | Check threads/channels for new messages user hasn't replied to |
-| **Jira tickets** | Load `~/.claude/jira-ticket-prefs.json` (use silent defaults if missing), run JQL, fetch tickets |
-| **News search** | **Mondays only.** Check today's day of week — if Monday, load `~/.claude/weekly-news-prefs.json` and run 4 parallel searches for the saved topic. If not Monday, skip this fetch entirely. |
-| **Standup data** | Fetch: yesterday's Jira activity, today's open Jira tickets, yesterday's standup thread, today's calendar events |
+---
 
-As each fetch completes, immediately display that section — do not wait for the others to finish first.
+**Subagent A — Slack Inbox**
+```
+Fetch Slack inbox data for the current user.
+1. Look up the current user's Slack ID dynamically
+2. Search for direct @mentions in the last 24h (48h if today is Monday)
+3. Check thread/channel activity for messages the user hasn't replied to
+4. Classify each message:
+   - Direct @mention in message body → "👉 Action needed: Reply — @mentioned directly"
+   - Thread/channel presence, not @mentioned → "📌 FYI (cc)"
+Return the complete formatted section starting with: ━━━ 📬 SLACK ━━━
+```
 
-**Step 2: Display Slack results**
-Format and print under `━━━ 📬 SLACK ━━━`
-- Direct @mentions → `👉 Action needed: Reply`
-- Thread/channel presence → `📌 FYI (cc)`
+**Subagent B — Jira Tickets**
+```
+Fetch Jira tickets for the current user.
+1. Load ~/.claude/jira-ticket-prefs.json — if missing, use silent defaults:
+   exclude_statuses: ["Done", "Closed", "Cancelled", "Released"]
+   exclude_self_moved: ["QA Ready"]
+2. JQL: assignee = currentUser() AND sprint in openSprints() AND status NOT IN ([exclude_statuses]) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC
+3. Group by: 🔴 BLOCKED → 🟡 IN PROGRESS → 🟢 TO DO/BACKLOG → ⏳ RELEASE READY
+4. Each ticket: 🔗 [TICKET-ID](https://swingvy.atlassian.net/browse/TICKET-ID) Title — Status
+Return the complete formatted section starting with: ━━━ 📋 JIRA ━━━
+```
 
-**Step 3: Display Jira results**
-Format and print under `━━━ 📋 JIRA ━━━`
-- Group by status: 🔴 BLOCKED → 🟡 IN PROGRESS → 🟢 TO DO → ⏳ RELEASE READY
-- Each ticket as `🔗 [TICKET-ID](url) Title — Status`
+**Subagent C — Standup Draft**
+```
+Generate a standup draft.
+1. Fetch in parallel:
+   a. Yesterday's Jira: assignee = currentUser() AND updated >= -1d (use -3d on Mondays)
+   b. Today's open Jira: assignee = currentUser() AND sprint in openSprints() AND status IN ("In Progress", "To Do", "Open", "Backlog")
+   c. Yesterday's standup thread from channel C017BR4KUPL — find the bot reminder message and read the user's reply
+   d. Today's Google Calendar events — exclude all-day, declined, and events with "standup"/"stand-up"/"daily scrum" in the title
+2. Cross-check yesterday's "Todo today" items against open Jira — flag any with no matching ticket (⚠️)
+3. Generate draft in 6-section team format:
+   1. Today, I'm [emoji based on workload]
+   2. Done  3. Delayed  4. Todo today  5. Blockage
+   6. ETC — list calendar meetings as [HH:MM] Title
+Return the complete formatted section starting with: ━━━ 📝 STANDUP ━━━
+End with: "Post this to the standup channel? (yes / no)"
+```
 
-**Step 4: Display News results (Mondays only)**
-- If today is **not Monday**: skip this section entirely — do not print the header.
-- If today is **Monday**: format and print under `━━━ 📰 NEWS ━━━`
-  - 5 most recent items, sorted by date
-  - If fewer than 3 from past 7 days: show "📭 Not much this week — here are the most recent:"
-  - If 0–1 results: "📭 Nothing special this week."
+**Subagent D — Weekly News (Mondays only)**
+```
+Only run if today is Monday. If not Monday, return exactly: SKIP
+If Monday:
+1. Load ~/.claude/weekly-news-prefs.json for saved topic
+2. Calculate 7 days ago date. Run 4 parallel searches:
+   - [TOPIC] news after:[date]
+   - [TOPIC] announcement release after:[date]
+   - [TOPIC] tool update case study [year]
+   - [TOPIC] site:twitter.com OR site:x.com OR site:threads.net after:[date]
+3. Sort all results by publish date, pick 5 most recent
+4. If <3 from past 7 days: prefix "📭 Not much this week — most recent items:"
+5. If 0–1 results total: return "📭 Nothing special this week."
+Return the complete formatted section starting with: ━━━ 📰 NEWS ━━━
+```
 
-**Step 5: Display Standup draft**
-Format and print under `━━━ 📝 STANDUP ━━━`
-- Use the 6-section team format (Today I'm / Done / Delayed / Todo / Blockage / ETC)
-- ETC: list today's calendar meetings (exclude standup itself)
-- Ask: "Post this to the standup channel? (yes / no)"
+---
+
+Wait for all subagents to return, then proceed.
+
+**Step 2: Assemble and display results**
+Display sections in order: Slack → Jira → News (skip if Subagent D returned SKIP) → Standup
 
 **Step 6: Close with a daily focus prompt**
 Once all sections have arrived, print:
