@@ -77,7 +77,7 @@ Generate a standup draft.
    2. Done  3. Delayed  4. Todo today  5. Blockage
    6. ETC — list calendar meetings as [HH:MM] Title
 Return the complete formatted section starting with: ━━━ 📝 STANDUP ━━━
-End with: "Post this to the standup channel? (yes / no)"
+End with an AskUserQuestion: "Post this to the standup channel?" with options "Yes, post it" / "No, I'll copy-paste"
 ```
 
 **Subagent D — Weekly News (Mondays only)**

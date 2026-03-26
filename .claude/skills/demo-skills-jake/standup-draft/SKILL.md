@@ -65,10 +65,12 @@ Action verbs to use: Completed, Moved to QA, Reviewed, Fixed, Updated, Started, 
 For "Today, I'm" — pick an appropriate emoji based on workload (🙂 normal, 😅 busy, 😴 slow day, etc.).
 
 **Step 4: Ask if the user wants to post it**
-After showing the draft, ask:
-"Post this to Slack? (yes / no — it will be posted to the standup channel)"
-- If yes → post the draft as a new message to the standup channel found in Step 3
-- If no → display the draft cleanly so the user can copy-paste it themselves
+After showing the draft, use the `AskUserQuestion` tool with these exact options:
+- Question: "Post this to the standup channel?"
+- Option A: "Yes, post it" → post the draft as a new message to the standup channel
+- Option B: "No, I'll copy-paste" → display the draft cleanly and stop
+
+Do NOT use plain text "yes / no" — always use AskUserQuestion so the user gets a clickable button.
 
 ## Output format
 
