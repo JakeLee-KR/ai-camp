@@ -20,18 +20,19 @@ in one command using Slack, Jira, and WebSearch, saving 10+ minutes every day."
 
 SKILLS I NEED:
 1. /morning-valet:   orchestrates the full morning briefing and daily focus summary
-2. /slack-inbox:     fetches direct mentions and unread channel/thread activity
+2. /slack-inbox:     fetches direct @mentions (action needed) and unread channel/thread activity (FYI cc)
 3. /my-jira-tickets: lists current sprint tickets grouped by status with clickable links
-4. /weekly-news:     delivers 5 personalized news items by industry + department via Slack DM
-5. /standup-draft:   generates a daily standup from Jira activity and yesterday's standup thread
+4. /weekly-news:     delivers 5 most recent news items by industry + department via Slack DM
+5. /standup-draft:   generates a daily standup from Jira, Slack thread, and Google Calendar meetings
 
 MCP CONNECTIONS NEEDED:
-- Slack:  to read mentions, threads, and send the news digest as a DM
-- Jira:   to fetch assigned tickets and filter by sprint/status
-- WebSearch: to find live news articles from the past 7 days
+- Slack:         read mentions, threads, channels; send news digest as DM
+- Jira:          fetch assigned tickets and filter by sprint/status
+- Google Calendar: fetch today's meetings for standup section 6 (ETC)
+- WebSearch:     find live news articles from the past 7 days
 
-SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira,
-          and news — with my top 3 priorities for the day, in under 60 seconds.
+SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira, news,
+          and a ready-to-post standup — with my top 3 priorities, in under 60 seconds.
 ```
 
 ---
@@ -40,9 +41,9 @@ SUCCESS = I can type /morning-valet and get a full briefing — Slack, Jira,
 
 | Skill | Command | What it does |
 |---|---|---|
-| Morning Valet | `/morning-valet` | Runs Slack, Jira, and news briefing in sequence with a daily focus summary |
-| Slack Inbox | `/slack-inbox` | Shows direct mentions and unread channel/thread activity |
-| My Jira Tickets | `/my-jira-tickets` | Lists your current sprint tickets grouped by status |
-| Weekly News | `/weekly-news` | Delivers 5 personalized news items based on your industry and department |
+| Morning Valet | `/morning-valet` | Orchestrates Slack, Jira, news, and standup in one briefing with daily focus summary |
+| Slack Inbox | `/slack-inbox` | Shows direct @mentions (👉 action needed) and thread/channel activity (📌 FYI cc) |
+| My Jira Tickets | `/my-jira-tickets` | Lists current sprint tickets grouped by status with clickable Jira links |
+| Weekly News | `/weekly-news` | Delivers 5 most recent news items by industry + department, sent via Slack DM |
+| Standup Draft | `/standup-draft` | Generates standup from Jira activity, yesterday's thread, and today's calendar meetings |
 | Daily Checklist | `/daily-checklist` | Shows a day-of-week task checklist to structure your day |
-| Standup Draft | `/standup-draft` | Generates a daily standup from Jira activity and yesterday's standup thread |
