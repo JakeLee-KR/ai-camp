@@ -11,44 +11,26 @@ Jira and Slack — no more staring at a blank screen trying to remember yesterda
 
 ## Steps
 
-**Step 1: Fetch yesterday's Jira activity**
-Query Jira for tickets updated or transitioned by the current user yesterday:
-- JQL: `assignee = currentUser() AND updated >= -1d ORDER BY updated DESC`
-- Look for: status changes, comments added, tickets closed or moved to QA Ready/In Review
-- On Mondays, look back across Friday + the weekend: `updated >= -3d`
+**Step 1: Fetch all data in parallel**
+Fire ALL of the following at the same time — do not wait for one before starting the next:
 
-**Step 2: Fetch today's Jira tickets**
-Query for tickets currently in progress or to be started today:
-- JQL: `assignee = currentUser() AND sprint in openSprints() AND status IN ("In Progress", "To Do", "Open", "Backlog") ORDER BY updated DESC`
+| Fetch | What to do |
+|---|---|
+| **Jira yesterday** | JQL: `assignee = currentUser() AND updated >= -1d ORDER BY updated DESC` (use `-3d` on Mondays) |
+| **Jira today** | JQL: `assignee = currentUser() AND sprint in openSprints() AND status IN ("In Progress", "To Do", "Open", "Backlog") ORDER BY updated DESC` |
+| **Standup thread** | `slack_get_channel_history` on the standup channel, then `slack_read_thread` on yesterday's bot reminder message |
+| **Slack blockers** | `slack_search_public_and_private` for direct mentions from yesterday that have no reply from current user |
+| **Calendar** | `gcal_list_events` for today 00:00–23:59, filter out all-day, declined, and standup/stand-up/daily-scrum events |
 
-**Step 3: Read yesterday's standup thread**
-Use standup channel ID `C017BR4KUPL` by default (Swingvy #standup). To use a different channel, search with `slack_search_channels` for a channel named "standup", "stand-up", or "daily-standup" and use that ID instead. If no override is found, fall back to `C017BR4KUPL`.
-Fetch recent messages from that channel using `slack_get_channel_history`.
-- Look for a message posted by the current user yesterday (or Friday if today is Monday)
-- If found, read any thread replies on that message using `slack_get_thread_replies`
-- Extract the user's "Todo today" items from yesterday's standup message
-- Use this context to:
-  - Cross-check what the user said they'd do yesterday vs. what actually happened in Jira
-  - Pick up any team comments or follow-ups from the thread that are relevant today
-  - **Flag untracked tasks:** For each "Todo today" item from yesterday, check if a matching Jira ticket exists in the current sprint. If no matching ticket is found, add a note in the draft:
-    ```
-    ⚠️ "[task name]" was in yesterday's todo but has no matching open Jira ticket. Worth creating one?
-    ```
+Wait for all fetches to complete, then proceed.
 
-**Step 4: Fetch today's calendar**
-Use `gcal_list_events` to fetch today's Google Calendar events.
-- Time range: today from 00:00 to 23:59 local time
-- Filter out: all-day events, declined events, personal/OOO blocks, and any event whose title contains "standup", "stand-up", "daily scrum", or "daily sync"
-- Keep: meetings with other attendees (1:1s, syncs, standups, reviews, etc.)
-- Format each as: `[HH:MM] Meeting title` (e.g. `10:00 1:1 with Jinyoung`)
-- If no meetings: skip — leave section 6 blank
+**Step 2: Cross-check yesterday's todos**
+From the standup thread, extract the user's "Todo today" items.
+- For each item, check if a matching Jira ticket exists in the current sprint (title substring match)
+- If no match: flag with `⚠️ "[task]" was in yesterday's todo but has no open Jira ticket — worth creating one?`
 
-**Step 5: Check for blockers**
-Look for:
-- Any Jira tickets with status "Blocked"
-- Any Slack direct mentions from yesterday that have not been replied to (use `slack_search_public_and_private` with the current user's name and yesterday's date)
-
-**Step 6: Generate the standup draft**
+**Step 3: Generate the standup draft**
+Using all data fetched in Step 1:
 Format the output using the team's standup form — 6 sections, bullet points, plain language:
 
 ```
@@ -82,7 +64,7 @@ Use plain, natural language. Keep each bullet to one line.
 Action verbs to use: Completed, Moved to QA, Reviewed, Fixed, Updated, Started, Commented on, Closed.
 For "Today, I'm" — pick an appropriate emoji based on workload (🙂 normal, 😅 busy, 😴 slow day, etc.).
 
-**Step 7: Ask if the user wants to post it**
+**Step 4: Ask if the user wants to post it**
 After showing the draft, ask:
 "Post this to Slack? (yes / no — it will be posted to the standup channel)"
 - If yes → post the draft as a new message to the standup channel found in Step 3
