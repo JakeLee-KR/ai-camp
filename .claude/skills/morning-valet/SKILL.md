@@ -54,26 +54,34 @@ Good morning! 🌅 Today is [Day], [Month DD YYYY].
 Fetching your briefing... ⏳
 ```
 
-The base directory for this skill is shown at the top of this skill run (e.g. `/path/to/.claude/skills/demo-skills-jake`). Sub-skill files are siblings in that same directory — read them directly using that path. Never search for them.
+The base directory for this skill is shown at the top of this skill run (e.g. `/path/to/.claude/skills/morning-valet`). Sub-skill files are **siblings of the morning-valet directory** — one level up. Compute the skills root as `{base_dir}/..` and read sub-skills from there.
+
+**Path resolution (important — avoids worktree failures):**
+1. Check `~/.claude/morning-valet-prefs.json` for a `skills_root` field — if present, use it directly and skip steps 2–4.
+2. Compute `skills_root = {base_dir}/..` (parent of morning-valet)
+3. Try reading `{skills_root}/slack-inbox/SKILL.md`
+4. If the file does not exist (e.g. running in a git worktree where `.claude/skills/` is not present), strip the worktree segment from the path: remove `.claude/worktrees/{worktree-name}` from `skills_root` to get the main repo's skills root. Example: `/repo/.claude/worktrees/happy-wu/.claude/skills` → `/repo/.claude/skills`.
+5. Once a valid `skills_root` is confirmed (file exists), save it to `~/.claude/morning-valet-prefs.json` as `"skills_root": "{resolved_path}"` — preserve all existing fields. Future runs skip resolution entirely.
+6. Never use Glob or search — derive the path deterministically using steps 1–5.
 
 **If the `Agent` tool is available:** launch ALL four subagents in a single message using the Agent tool. Pass each subagent the full contents of its SKILL.md as the prompt, read from:
-- `{base_dir}/slack-inbox/SKILL.md` → Subagent A (model: sonnet)
-- `{base_dir}/my-jira-tickets/SKILL.md` → Subagent B (model: sonnet)
-- `{base_dir}/standup-draft/SKILL.md` → Subagent C (model: sonnet)
-- `{base_dir}/weekly-news/SKILL.md` → Subagent D (model: sonnet, only if today is Monday)
+- `{skills_root}/slack-inbox/SKILL.md` → Subagent A (model: sonnet)
+- `{skills_root}/my-jira-tickets/SKILL.md` → Subagent B (model: sonnet)
+- `{skills_root}/standup-draft/SKILL.md` → Subagent C (model: sonnet)
+- `{skills_root}/weekly-news/SKILL.md` → Subagent D (model: sonnet, only if today is Monday)
 
 **First-done, first-served display:** Do NOT wait for all subagents before showing output. As each subagent returns its result, immediately print that section with its header — in whatever order they finish. After all sections have been printed, proceed to Step 2.
 
 **If `Agent` tool is NOT available — sequential fallback:**
-Read each SKILL.md directly using the base directory path and execute sequentially, printing each header before starting that fetch:
+Read each SKILL.md directly using `{skills_root}` (resolved above) and execute sequentially, printing each header before starting that fetch:
 ```
-━━━ 📬 SLACK ━━━  ← print this, then execute slack-inbox/SKILL.md
+━━━ 📬 SLACK ━━━  ← print this, then execute {skills_root}/slack-inbox/SKILL.md
 [results]
-━━━ 📋 JIRA ━━━  ← print this, then execute my-jira-tickets/SKILL.md
+━━━ 📋 JIRA ━━━  ← print this, then execute {skills_root}/my-jira-tickets/SKILL.md
 [results]
-━━━ 📰 NEWS ━━━  ← Monday only, execute weekly-news/SKILL.md
+━━━ 📰 NEWS ━━━  ← Monday only, execute {skills_root}/weekly-news/SKILL.md
 [results]
-━━━ 📝 STANDUP ━━━  ← print this, then execute standup-draft/SKILL.md
+━━━ 📝 STANDUP ━━━  ← print this, then execute {skills_root}/standup-draft/SKILL.md
 [results]
 ```
 
