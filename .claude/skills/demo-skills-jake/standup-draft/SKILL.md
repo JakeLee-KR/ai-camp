@@ -34,12 +34,20 @@ Fetch recent messages from the standup Slack channel (ID: `C017BR4KUPL`) using `
     ⚠️ "[task name]" was in yesterday's todo but has no matching open Jira ticket. Worth creating one?
     ```
 
-**Step 4: Check for blockers**
+**Step 4: Fetch today's calendar**
+Use `gcal_list_events` to fetch today's Google Calendar events.
+- Time range: today from 00:00 to 23:59 local time
+- Filter out: all-day events, declined events, and personal/OOO blocks
+- Keep: meetings with other attendees (1:1s, syncs, standups, reviews, etc.)
+- Format each as: `[HH:MM] Meeting title` (e.g. `10:00 1:1 with Jinyoung`)
+- If no meetings: skip — leave section 6 blank
+
+**Step 5: Check for blockers**
 Look for:
 - Any Jira tickets with status "Blocked"
 - Any Slack direct mentions from yesterday that have not been replied to (use `slack_search_public_and_private` with the current user's name and yesterday's date)
 
-**Step 5: Generate the standup draft**
+**Step 6: Generate the standup draft**
 Format the output using the team's standup form — 6 sections, bullet points, plain language:
 
 ```
@@ -64,15 +72,16 @@ Format the output using the team's standup form — 6 sections, bullet points, p
 • (If none: leave blank)
 
 6. ETC
-• [anything else worth mentioning — meetings, OOO, notes]
-• (If nothing: leave blank)
+• [HH:MM] [Meeting title] (from Google Calendar)
+• [anything else worth mentioning — OOO, notes]
+• (If no meetings and nothing else: leave blank)
 ```
 
 Use plain, natural language. Keep each bullet to one line.
 Action verbs to use: Completed, Moved to QA, Reviewed, Fixed, Updated, Started, Commented on, Closed.
 For "Today, I'm" — pick an appropriate emoji based on workload (🙂 normal, 😅 busy, 😴 slow day, etc.).
 
-**Step 6: Ask if the user wants to post it**
+**Step 7: Ask if the user wants to post it**
 After showing the draft, ask:
 "Post this to Slack? (yes / no — it will be posted to the standup channel)"
 - If yes → post the draft as a new message to channel `C017BR4KUPL`
@@ -98,6 +107,8 @@ After showing the draft, ask:
 5. Blockage
 
 6. ETC
+• 10:00 1:1 with Jinyoung
+• 14:00 Backlog refinement
 
 ---
 Post to Slack? (yes / no)
@@ -107,4 +118,5 @@ Post to Slack? (yes / no)
 - If Jira MCP is not connected: "Jira is not connected. Writing standup from Slack activity only."
 - If no Jira activity found for yesterday: show "No Jira activity recorded yesterday." and continue
 - If Slack is not connected: skip the blocker check and the posting option; note "Slack not connected — copy and paste manually."
+- If Google Calendar is not connected: skip Step 4 and leave section 6 blank; note "Calendar not connected — add meetings manually."
 - If it's Monday: automatically look back to Friday and note "(Friday's activity)" next to yesterday's items
