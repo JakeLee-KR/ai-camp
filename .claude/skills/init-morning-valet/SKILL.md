@@ -1,23 +1,20 @@
 ---
-name: init-demo
+name: init-morning-valet
 description: "First-time setup for all morning-valet skills. Seeds all prefs files so subsequent runs are fully automatic. Use for 'set up', 'initialize', 'first time setup', 'configure my skills'."
 ---
 
-# Init Demo
+# Init Morning Valet
 
 ## Steps
 
 **Step 1: Check what's already configured**
-Check which prefs files already exist:
-- `~/.claude/morning-valet-prefs.json`
-- `~/.claude/jira-ticket-prefs.json`
-- `~/.claude/weekly-news-prefs.json`
+Read `~/.claude/morning-valet-prefs.json` and check whether it contains `"schedule_asked": true`.
 
-If all three exist, print:
+If it does, print:
 ```
-✅ You're already set up! Run /morning-valet to start your day.
+🔄 Reconfiguring your morning-valet preferences. Your previous settings will be overwritten.
 ```
-Then stop.
+Always continue to Step 2 — never skip setup, even if already configured.
 
 **Step 2: Ask setup questions**
 Use AskUserQuestion — first call:

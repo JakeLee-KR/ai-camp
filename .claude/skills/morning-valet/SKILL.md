@@ -13,17 +13,17 @@ Your personal morning briefing. Runs four skills back-to-back and presents a uni
 - **If the `Agent` tool is not available:** run each section sequentially (Slack → Jira → News → Standup), printing each section header before starting that fetch so the user sees progress.
 
 ## First-run setup
-On the very first run (check by whether `~/.claude/morning-valet-prefs.json` exists):
+On the very first run (check by whether `~/.claude/morning-valet-prefs.json` contains `"schedule_asked": true`):
+- If `schedule_asked` is NOT true (including when the file doesn't exist or was created by `/init-morning-valet`), ask the scheduling question.
+- If `schedule_asked` is true, skip straight to the briefing.
+
 Ask: "Would you like your morning briefing delivered automatically on a schedule?"
 - Yes → ask: "What time? (e.g. 9AM)" and "Which days? (e.g. weekdays / every day)"
   - Convert to a cron expression and create a scheduled task using `create_scheduled_task`
   - Confirm: "Done! I'll run your morning briefing at [time] on [days]."
 - No / Skip → continue without scheduling
 
-Save to `~/.claude/morning-valet-prefs.json`:
-```json
-{ "setup_complete": true }
-```
+After asking (regardless of answer), update `~/.claude/morning-valet-prefs.json` to add `"schedule_asked": true`. Preserve any existing fields (e.g. `setup_complete`).
 On subsequent runs, skip this question and go straight to the briefing.
 
 ## Steps
