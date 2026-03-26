@@ -130,20 +130,14 @@ Have a great day! 💪
 Derive the top 3 from the actual results — pick the highest-priority Slack mention and Jira tickets. Do not make up items.
 
 ## Output format
-Each section is separated by a bold header line. Sections appear in order: Slack → Jira → News → Standup → Focus.
-Keep each section's output identical to what the individual skill would produce.
+Sections appear in order: Slack → Jira → News (Mondays only) → Standup → Focus.
+Each section is separated by its header line (━━━ emoji TITLE ━━━).
 
 ## Error handling
-- If a skill fails or its MCP is disconnected: show an error banner for that section and continue with the remaining skills
+- If a subagent fails or its MCP is disconnected: show an error banner for that section and continue
   ```
   ━━━ 📬 SLACK ━━━
   ⚠️  Slack is not connected. Skipping this section.
   ```
-- If all four fail: "All tools are currently disconnected. Please check your MCP settings in Claude Desktop."
-- Never stop early — always attempt all four skills even if one fails
-
-## Notes
-- On first run, `/weekly-news` will ask for industry + department (2 questions only). That's expected — it only happens once.
-- On first run, `/my-jira-tickets` uses defaults silently — no questions asked inside morning-valet.
-- After first-run setup is complete, `/morning-valet` runs fully automatically with no questions.
-- Scheduling is owned by morning-valet only — individual skills should not ask about scheduling when called from here.
+- If all fail: "All tools are currently disconnected. Please check your MCP settings in Claude Desktop."
+- Never stop early — always attempt all sections even if one fails
