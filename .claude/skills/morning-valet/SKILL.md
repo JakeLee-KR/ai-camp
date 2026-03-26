@@ -57,10 +57,10 @@ Fetching your briefing... ⏳
 The base directory for this skill is shown at the top of this skill run (e.g. `/path/to/.claude/skills/demo-skills-jake`). Sub-skill files are siblings in that same directory — read them directly using that path. Never search for them.
 
 **If the `Agent` tool is available:** launch ALL four subagents in a single message using the Agent tool. Pass each subagent the full contents of its SKILL.md as the prompt, read from:
-- `{base_dir}/slack-inbox/SKILL.md` → Subagent A
-- `{base_dir}/my-jira-tickets/SKILL.md` → Subagent B
-- `{base_dir}/standup-draft/SKILL.md` → Subagent C
-- `{base_dir}/weekly-news/SKILL.md` → Subagent D (only if today is Monday)
+- `{base_dir}/slack-inbox/SKILL.md` → Subagent A (model: opus)
+- `{base_dir}/my-jira-tickets/SKILL.md` → Subagent B (model: opus)
+- `{base_dir}/standup-draft/SKILL.md` → Subagent C (model: opus)
+- `{base_dir}/weekly-news/SKILL.md` → Subagent D (model: opus, only if today is Monday)
 
 **First-done, first-served display:** Do NOT wait for all subagents before showing output. As each subagent returns its result, immediately print that section with its header — in whatever order they finish. After all sections have been printed, proceed to Step 2.
 
