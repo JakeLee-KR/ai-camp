@@ -36,8 +36,8 @@ On first run, if the file does not exist, ask the user these 3 questions. For ea
 
 **Question 1 — Statuses to exclude:**
 "Which statuses should be hidden from your list? (pick numbers or type names)"
-Default if skipped: `["Done", "Closed", "Cancelled", "Released"]`
-Typical choices: Done, Closed, Cancelled, Released (already shipped — no action needed)
+Default if skipped: `["Done", "Closed", "Cancelled", "Released", "Release Ready"]`
+Typical choices: Done, Closed, Cancelled, Released, Release Ready (already shipped or waiting for release — no action needed from QA)
 
 **Question 2 — Self-moved statuses to exclude:**
 "Which statuses do YOU move tickets to yourself? Those will be auto-hidden. (pick numbers or type names)"
@@ -53,7 +53,7 @@ Example: pick `In Review` if you want to track tickets under peer review
 Save to `~/.claude/jira-ticket-prefs.json`:
 ```json
 {
-  "exclude_statuses": ["Done", "Closed", "Cancelled", "Released"],
+  "exclude_statuses": ["Done", "Closed", "Cancelled", "Released", "Release Ready"],
   "exclude_self_moved": ["QA Ready"],
   "must_include_statuses": []
 }
@@ -64,7 +64,7 @@ On subsequent runs, load silently — no questions asked. User can say "change m
 **When running inside `/morning-valet`:** If the prefs file does not exist, use defaults silently without asking any questions. Save the defaults file automatically so future runs are also silent:
 ```json
 {
-  "exclude_statuses": ["Done", "Closed", "Cancelled", "Released"],
+  "exclude_statuses": ["Done", "Closed", "Cancelled", "Released", "Release Ready"],
   "exclude_self_moved": ["QA Ready"],
   "must_include_statuses": [],
   "setup_complete": true
@@ -81,14 +81,20 @@ On subsequent runs, load silently — no questions asked. User can say "change m
    - Final: `ORDER BY updated DESC`
    - Example (without must-include): `assignee = currentUser() AND sprint in openSprints() AND status NOT IN (Done, Closed, Cancelled) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC`
    - Example (with must-include `In Review`): `assignee = currentUser() AND sprint in openSprints() AND (status NOT IN (Done, Closed, Cancelled) OR status IN ("In Review")) AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC`
-3. Group tickets by status in this order:
-   - 🔴 **BLOCKED** — status is Blocked
-   - 🔵 **WAITING FOR YOUR ACTION** — status is QA Ready (moved by someone else), In Review (peer review needed), or any status in `must_include_statuses` where you are the assignee and did not move it there yourself.
+3. Group tickets by status in this order.
+   **IMPORTANT: Always use the exact `status.name` value from the Jira API response to classify each ticket. Never infer or guess the status from the ticket title, summary, or comments.**
+   - 🔴 **BLOCKED** — `status.name` is exactly `"Blocked"`
+   - 🔵 **WAITING FOR YOUR ACTION** — `status.name` is exactly `"QA Ready"`, `"In Review"`, or any value in `must_include_statuses`, AND the current user did NOT move the ticket to that status.
+     - **For every ticket in this group:** check the changelog to confirm the status was last changed by someone other than the current user. If the current user was the one who moved it to that status, **exclude it entirely** — it means you already acted on it.
      - Note: `must_include_statuses` does NOT override tickets you moved into a status listed in `exclude_self_moved` — those remain auto-hidden.
-     These are tickets explicitly waiting for YOU to act on them.
-   - 🟡 **IN PROGRESS** — status is In Progress
-   - 🟢 **TO DO / BACKLOG** — status is Open or Backlog
-   - ⏳ **RELEASE READY** — collapsed summary only
+     These are tickets explicitly waiting for YOU to act on them — not tickets you already handed off.
+   - 🟡 **IN PROGRESS** — `status.name` is exactly `"In Progress"`
+   - 🟢 **TO DO / BACKLOG** — `status.name` is exactly `"Open"` or `"Backlog"`
+   - ⏳ **RELEASE READY** — `status.name` is exactly `"Release Ready"` — collapsed summary only
+   - Any ticket whose `status.name` does not match any group above: place in a catch-all section `❓ OTHER` with a note of its exact status name.
+
+   **Self-verification:** After grouping all tickets, re-read each ticket's `status.name` from the API response and confirm it matches the group it was placed in. Fix any mismatches before outputting.
+
 4. For each ticket, check the latest comment:
    - If the latest comment is from someone else and it appears to be waiting on you, set “Action needed” accordingly and include the snippet (commenter + date).
    - If there is no waiting comment, keep the output concise (e.g. “No new comments” / “Nothing to respond to”) so you don’t have to parse irrelevant text.
@@ -116,7 +122,7 @@ On subsequent runs, load silently — no questions asked. User can say "change m
 
 🔵 WAITING FOR YOUR ACTION
 • [TICKET-ID] Title of ticket
-  Status: QA Ready | Moved by: {name}, {date} | Latest comment: "{comment snippet}" — {commenter}, {date} (if any)
+  Status: {exact status.name from API} | Moved by: {name}, {date} | Latest comment: "{comment snippet}" — {commenter}, {date} (if any)
   🔗 [TICKET-ID](webUrl from Jira response)
   👉 Action needed: Ready to test (or respond to waiting comment if present)
 

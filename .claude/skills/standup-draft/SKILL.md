@@ -21,7 +21,7 @@ Then fire ALL of the following in a single message — do not wait for one befor
 | Fetch | What to do |
 |---|---|
 | **Jira yesterday** | JQL: `assignee = currentUser() AND updated >= -1d AND status changed DURING (-1d, now()) ORDER BY updated DESC` (use `-3d` on Mondays) |
-| **Jira today** | JQL: `assignee = currentUser() AND sprint in openSprints() AND status NOT IN (Done, Closed, Cancelled, Released) ORDER BY updated DESC` |
+| **Jira today** | Two queries: (1) `assignee = currentUser() AND sprint in openSprints() AND status NOT IN (Done, Closed, Cancelled, Released, "Release Ready") ORDER BY updated DESC` for in-progress work; (2) `assignee = currentUser() AND sprint in openSprints() AND status = "QA Ready" AND NOT (status changed to "QA Ready" by currentUser()) ORDER BY updated DESC` for tickets moved to QA Ready by others (these go into "Todo today" as items to test) |
 | **Slack standup thread** | `slack_get_channel_history` on the standup channel — find the user's message from yesterday (or Friday if Monday), read thread replies |
 | **Slack blockers** | `slack_search_public_and_private` for direct mentions from yesterday that have no reply from current user |
 | **Calendar** | `gcal_list_events` for today 00:00–23:59, filter out all-day, declined, and standup/stand-up/daily-scrum events |
@@ -46,7 +46,9 @@ Format the output using the team's standup form — 6 sections, bullet points, p
 • (If nothing: leave blank)
 
 4. Todo today
-• [ticket ID] [ticket title]
+• [ticket ID] [ticket title]  ← in-progress tickets continuing from yesterday
+• [ticket ID] [ticket title]  ← QA Ready tickets moved by others (ready to test)
+• [HH:MM] [Meeting title]  ← meetings from Google Calendar (same ones as ETC, listed here too)
 • (If nothing: "No open tickets assigned — check with team.")
 
 5. Blockage
@@ -79,6 +81,9 @@ For "Today, I'm" — pick an appropriate emoji based on workload (🙂 normal, �
 4. Todo today
 • LV-968 [QA] Story 3-1b — Re-visit story 1-3
 • MP-1587 Regression test (Mobile)
+• Test SQ-9871 — Wrong colour of Unpaid leave badge (QA Ready, assigned by Mina)
+• 10:30 QA sync up for LPE2
+• 15:00 Demo day - Swingvy AI Camp
 
 5. Blockage
 
